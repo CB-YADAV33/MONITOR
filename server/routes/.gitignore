@@ -1,0 +1,33 @@
+# Node
+node_modules/
+npm-debug.log*
+.yarn/
+.pnpm-store/
+dist/
+build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+.venv/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Vite / Next.js
+.next/
+out/
+.vite/
+
+# Replit
+.replit
+hidden/
