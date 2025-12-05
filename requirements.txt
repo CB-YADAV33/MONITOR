@@ -1,0 +1,35 @@
+fastapi
+uvicorn[standard]
+psycopg2-binary
+sqlalchemy
+alembic
+asyncpg
+aiofiles
+python-dotenv
+pydantic
+passlib[bcrypt]
+pyjwt
+cryptography
+
+# SNMP
+pysnmp
+
+# SSH
+netmiko
+paramiko
+
+# Scheduler
+apscheduler
+
+# Websocket
+websockets
+
+# LLDP and Network Parsing
+pycdp
+netaddr
+
+# Logging
+rich
+
+# Extra utilities
+requests

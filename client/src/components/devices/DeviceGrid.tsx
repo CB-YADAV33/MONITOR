@@ -1,0 +1,101 @@
+import { Device } from "@/lib/types";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Terminal, Shield, Trash2, Activity, Server, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { formatDistanceToNow } from "date-fns";
+
+interface DeviceGridProps {
+  devices: Device[];
+  onDelete: (id: number) => void;
+}
+
+export function DeviceGrid({ devices, onDelete }: DeviceGridProps) {
+  if (devices.length === 0) {
+    return (
+      <div className="text-center py-12 text-muted-foreground">
+        No devices found. Add your first device to get started.
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {devices.map((device) => (
+        <Card key={device.id} className="overflow-hidden transition-all hover:shadow-md border-t-4"
+          style={{ borderTopColor: 
+            device.status === 'online' ? 'hsl(var(--status-online))' : 
+            device.status === 'offline' ? 'hsl(var(--status-offline))' : 
+            device.status === 'warning' ? 'hsl(var(--status-warning))' : 'hsl(var(--muted))' 
+          }}
+        >
+          <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+            <div className="space-y-1">
+              <CardTitle className="text-base font-semibold flex items-center gap-2">
+                <Server className="h-4 w-4 text-muted-foreground" />
+                {device.hostname || 'Unknown'}
+              </CardTitle>
+              <p className="text-xs font-mono text-muted-foreground">{device.ipAddress}</p>
+            </div>
+            <Badge variant="outline" className={cn(
+              "capitalize",
+              device.status === 'online' && "border-green-500 text-green-500 bg-green-50 dark:bg-green-950/20",
+              device.status === 'offline' && "border-red-500 text-red-500 bg-red-50 dark:bg-red-950/20",
+              device.status === 'warning' && "border-orange-500 text-orange-500 bg-orange-50 dark:bg-orange-950/20",
+            )}>
+              {device.status || 'unknown'}
+            </Badge>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground mt-2">
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-foreground">Model</span>
+                <span>{device.model || 'N/A'}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-foreground">Vendor</span>
+                <span>{device.vendor || 'N/A'}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-foreground">SNMP</span>
+                <span>{device.snmpVersion || 'N/A'}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-foreground">Type</span>
+                <span>{device.deviceType || 'Unknown'}</span>
+              </div>
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+              <Clock className="h-3 w-3" />
+              {device.lastSeen 
+                ? `Last seen ${formatDistanceToNow(new Date(device.lastSeen), { addSuffix: true })}`
+                : 'Never seen'}
+            </div>
+          </CardContent>
+          <CardFooter className="bg-muted/50 p-3 flex justify-between">
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Dashboard">
+                <Activity className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="SSH Console">
+                <Terminal className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Config Backup">
+                <Shield className="h-4 w-4" />
+              </Button>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+              onClick={() => onDelete(device.id)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  );
+}
