@@ -1,6 +1,6 @@
 import { WebSocketServer, WebSocket } from "ws";
 import type { Server } from "http";
-import { db } from "./routes/db";
+import { db } from "./db";
 import { interfaceStats, alerts, topologyLinks, interfaces } from "../shared/schema";
 import { desc, eq } from "drizzle-orm";
 

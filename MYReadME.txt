@@ -33,7 +33,12 @@ C:\Users\BEL\OneDrive\Desktop\TOOL-M>npm run dev:client
 
 ==============================================================================================
 TO-RUN-BACKEND
-=======================================================================================================================================================
+===============================================================================================
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+========================================================
 C:\Users\BEL\OneDrive\Desktop\TOOL-M\backend>py -3.11 -m venv .venv
 
 C:\Users\BEL\OneDrive\Desktop\TOOL-M\backend>.venv\Scripts\activate
